@@ -2,3 +2,7 @@
 # Intellij
 *.iml
 .idea
+
+# Maven
+log/
+target/

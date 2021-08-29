@@ -23,3 +23,6 @@ public interface Lock {
     void unlock();
 }
 ```
+
+For testing purposes I created simple Counter class that has method increment() and tests that check if the implementation is correct.
+We will test each our locking implementation on this class.
