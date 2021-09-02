@@ -1,32 +1,35 @@
 package com.dan;
 
-public class FilterLock implements Lock {
-    private int[] level;
-    private int[] victim;
+import com.dan.utils.ThreadID;
 
-    public FilterLock(final int size) {
-        this.level = new int[size];
-        this.victim = new int[size];
-        for (int i = 0; i < size; i++) {
-            level[i] = 0;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class FilterLock implements Lock {
+
+    private AtomicInteger[] level;
+    private AtomicInteger[] victim;
+
+    private int n;
+
+    public FilterLock(int n) {
+        this.n = n;
+        level = new AtomicInteger[n];
+        victim = new AtomicInteger[n];
+        for (int i = 0; i < n; i++) {
+            level[i] = new AtomicInteger();
+            victim[i] = new AtomicInteger();
         }
     }
 
     @Override
     public void lock() {
-        int me = (int) Thread.currentThread().getId();
-        for (int i = 0; i < level.length; ++i) {
-            level[me] = i;
-            victim[i] = me;
-
-            // spin while conflicts exist
-            for (int k = 0; k < level.length; ++k) {
-                if (k != me) {
-                    while (level[k] >= i && victim[i] == me) {
-                    }
-                    break;
-                } else {
-                    continue;
+        int me = ThreadID.getCurrentThreadId(n);
+        for (int i = 1; i < n; i++) {
+            level[me].set(i);
+            victim[i].set(me);
+            for (int k = 0; k < n; k++) {
+                while ((k != me) && (level[k].get() >= i && victim[i].get() == me)) {
+                    // spinning...
                 }
             }
         }
@@ -34,7 +37,7 @@ public class FilterLock implements Lock {
 
     @Override
     public void unlock() {
-        int me = (int) Thread.currentThread().getId();
-        level[me] = 0;
+        int me = ThreadID.getCurrentThreadId(n);
+        level[me].set(0);
     }
 }

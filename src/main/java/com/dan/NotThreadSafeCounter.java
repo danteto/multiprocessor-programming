@@ -3,6 +3,10 @@ package com.dan;
 public class NotThreadSafeCounter implements Counter {
     private int count;
 
+    public NotThreadSafeCounter() {
+        this.count = 0;
+    }
+
     @Override
     public void increment() {
         count++;
