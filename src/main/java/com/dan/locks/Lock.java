@@ -1,4 +1,4 @@
-package com.dan;
+package com.dan.locks;
 
 public interface Lock {
     void lock();

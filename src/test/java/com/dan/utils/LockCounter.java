@@ -1,7 +1,7 @@
 package com.dan.utils;
 
 import com.dan.Counter;
-import com.dan.Lock;
+import com.dan.locks.Lock;
 
 public class LockCounter implements Counter {
     private Lock lock;

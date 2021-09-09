@@ -1,12 +1,14 @@
-package com.dan;
+package com.dan.locks;
 
+import com.dan.locks.BakeryLock;
 import com.dan.utils.LockCounter;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class FilterLockTest {
+
+public class BakeryLockTest {
 
     @Test
     public void testCounterWithoutLock() throws InterruptedException {
@@ -24,9 +26,9 @@ public class FilterLockTest {
     }
 
     @Test
-    public void testCounterWithFilterLock() throws InterruptedException {
-        FilterLock filterLock = new FilterLock(2);
-        LockCounter lockCounter = new LockCounter(filterLock);
+    public void testCounterWithBakeryLock() throws InterruptedException {
+        BakeryLock bakeryLock = new BakeryLock(2);
+        LockCounter lockCounter = new LockCounter(bakeryLock);
         Thread thread1 = new Thread(lockCounter::increment);
         Thread thread2 = new Thread(lockCounter::increment);
 
