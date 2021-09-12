@@ -26,3 +26,7 @@ public interface Lock {
 
 For testing purposes I created simple Counter class that has method increment() and tests that check if the implementation is correct.
 We will test each our locking implementation on this class.
+
+Let's take a look at first simple lock algorithm that has practical usage: TestAndTestSetLock.
+For the implementation of the algorithm we need atomic boolean "register" and Read-Modify-Write operation, namely, getAndSet(). GetAndSet() operation updates a register with the given value, but return old value.
+At the beginning the register value is false. In lock() method it is just spinning while the GetAndSet operation returns true, otherwise it enters a critical section. In unlock() method it set false value.    
