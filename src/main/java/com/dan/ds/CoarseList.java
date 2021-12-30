@@ -14,7 +14,7 @@ public class CoarseList<T> implements Set<T> {
 
     @Override
     public boolean add(T item) {
-        Node pred, curr;
+        Node<T> pred, curr;
         int key = item.hashCode();
         lock.lock();
 
@@ -29,7 +29,7 @@ public class CoarseList<T> implements Set<T> {
             if(key == curr.key) {
                 return false;
             } else {
-                Node node = new Node(item);
+                Node<T> node = new Node<>(item);
                 node.next = curr;
                 pred.next = node;
 
@@ -42,7 +42,7 @@ public class CoarseList<T> implements Set<T> {
 
     @Override
     public boolean remove(T item) {
-        Node pred, curr;
+        Node<T> pred, curr;
         int key = item.hashCode();
         lock.lock();
         try {
@@ -65,7 +65,7 @@ public class CoarseList<T> implements Set<T> {
 
     @Override
     public boolean contains(T item) {
-        Node curr;
+        Node<T> curr;
         int key = item.hashCode();
         lock.lock();
         try {
@@ -82,4 +82,12 @@ public class CoarseList<T> implements Set<T> {
 
         return false;
     }
+
+    @Override
+    public int size() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    
 }
